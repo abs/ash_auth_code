@@ -55,4 +55,13 @@ defmodule AshAuthCode do
   6. The strategy verifies the code matches the stored token
   7. User is signed in or registered
   """
+
+  use Spark.Dsl.Extension,
+    dsl_patches:
+      [
+        %Spark.Dsl.Patch.AddEntity{
+          section_path: [:authentication, :strategies],
+          entity: AshAuthCode.AuthCode.Dsl.dsl()
+        }
+      ]
 end
