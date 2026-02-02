@@ -1,7 +1,7 @@
 defmodule AshAuthCode.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
   @description "Code-based authentication strategy for Ash Authentication"
 
   def project do

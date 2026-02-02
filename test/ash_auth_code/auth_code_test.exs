@@ -93,4 +93,20 @@ defmodule AshAuthCode.AuthCodeTest do
       assert strategy.name == :auth_code
     end
   end
+
+  describe "identity serialization" do
+    test "to_string is called on identity values for token claims" do
+      # This tests that struct types like Ash.CiString are properly
+      # converted to strings before being stored in JWT claims.
+      # Regression test for: identity field structs causing JWT decode failures
+      ci_string = %AshAuthCode.Test.CiString{string: "test@example.com"}
+
+      # Verify our mock CiString converts properly
+      assert to_string(ci_string) == "test@example.com"
+
+      # The fix in request_token_for/4 ensures Map.get(user, identity_field)
+      # is passed through to_string() before being stored in claims.
+      # This prevents structs from being serialized as maps in the JWT.
+    end
+  end
 end

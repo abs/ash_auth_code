@@ -115,7 +115,7 @@ defmodule AshAuthCode.AuthCode do
            user,
            %{
              "act" => strategy.verify_action_name,
-             "identity" => Map.get(user, strategy.identity_field)
+             "identity" => user |> Map.get(strategy.identity_field) |> to_string()
            },
            Keyword.merge(opts,
              token_lifetime: strategy.token_lifetime,
